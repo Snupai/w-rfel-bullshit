@@ -43,18 +43,7 @@ namespace würfel_bullshit
             {
                 WriteLine($"{i}: {100.0/ (anzahlWürfe*5) * häufigkeit[i]:N2}%");
             }
-            // print a histogram for the distribution
-            for (int i = 1; i < häufigkeit.Length; i++)
-            {
-                Write($"{i}: ");
-                for (int j = 0; j < häufigkeit[i]; j++)
-                {
-                    Write("*");
-                }
-                WriteLine();
-            }
-
-
+            // TODO create histogram
 
             foreach (var auge in augen)
             {
