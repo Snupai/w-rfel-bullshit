@@ -47,7 +47,7 @@ namespace würfel_bullshit
             }
             for (int i = 1; i < häufigkeit.Length; i++)
             {
-                WriteLine($"{i}: {100.0/ (anzahlWürfe* anzahlWürfel) * häufigkeit[i]:N2}%");
+                WriteLine($"{i}: {100.0/ (anzahlWürfe * anzahlWürfel) * häufigkeit[i]:N2}%");
                 häufigkeitProzent[i] = 100.0 / (anzahlWürfe * anzahlWürfel) * häufigkeit[i];
             }
             //TODO create histogram
