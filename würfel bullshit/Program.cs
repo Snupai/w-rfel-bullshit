@@ -8,16 +8,21 @@ namespace würfel_bullshit
     {
         static void Main(string[] args)
         {
+            int sum = 0;
             int anzahlWürfe = 10_000_000;
+            int anzahlWürfel = 5;
             List<Würfel> würfels = new();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < anzahlWürfel; i++)
             {
                 würfels.Add(new Würfel());
             }
             foreach (var item in würfels)
             {
-                WriteLine(item.Würfeln());
+                int wurf = item.Würfeln();
+                WriteLine(wurf);
+                sum += wurf;
             }
+            WriteLine($"Summe: {sum}\n");
 
             List<int> augen = new();
             for (int i = 0; i < anzahlWürfe; i++)
@@ -27,29 +32,32 @@ namespace würfel_bullshit
                     augen.Add(item.Würfeln());
                 }
             }
-            Häufigkeit(augen, anzahlWürfe);
+            Häufigkeit(augen, anzahlWürfe, anzahlWürfel);
             ReadKey();
         }
 
-        static void Häufigkeit(List<int> augen, int anzahlWürfe)
+        static void Häufigkeit(List<int> augen, int anzahlWürfe, int anzahlWürfel)
         {
             int sum = 0;
             int[] häufigkeit = new int[7];
+            double[] häufigkeitProzent = new double[7];
             foreach (var item in augen)
             {
                 häufigkeit[item]++;
             }
             for (int i = 1; i < häufigkeit.Length; i++)
             {
-                WriteLine($"{i}: {100.0/ (anzahlWürfe*5) * häufigkeit[i]:N2}%");
+                WriteLine($"{i}: {100.0/ (anzahlWürfe* anzahlWürfel) * häufigkeit[i]:N2}%");
+                häufigkeitProzent[i] = 100.0 / (anzahlWürfe * anzahlWürfel) * häufigkeit[i];
             }
-            // TODO create histogram
+            //TODO create histogram
+
 
             foreach (var auge in augen)
             {
                 sum += auge;
             }
-            WriteLine($"Summe: {sum}");
+            WriteLine($"Summe: {sum:N0}");
             
         }
 
