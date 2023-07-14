@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using System.Diagnostics.CodeAnalysis;
+using static System.Console;
 using static Yann.wc;
 
 namespace würfel_bullshit
@@ -7,22 +8,60 @@ namespace würfel_bullshit
     {
         static void Main(string[] args)
         {
-            Würfel w = new Würfel(5);
-            Würfel w2 = new Würfel(9);
-            for (int i = 0; i < 10; i++)
+            int anzahlWürfe = 10_000_000;
+            List<Würfel> würfels = new();
+            for (int i = 0; i < 5; i++)
             {
-                w.Würfeln();
-                w2.Würfeln();
-                if (w.Augenzahl == w2.Augenzahl)
+                würfels.Add(new Würfel());
+            }
+            foreach (var item in würfels)
+            {
+                WriteLine(item.Würfeln());
+            }
+
+            List<int> augen = new();
+            for (int i = 0; i < anzahlWürfe; i++)
+            {
+                foreach (var item in würfels)
                 {
-                    WriteLineColor($"Würfel 1: <*green*>{w.Augenzahl}<*/*>  Würfel 2: <*green*>{w2.Augenzahl}<*/*>");
-                }
-                else
-                {
-                    WriteLineColor($"Würfel 1: <*red*>{w.Augenzahl}<*/*>  Würfel 2: <*red*>{w2.Augenzahl}<*/*>");
+                    augen.Add(item.Würfeln());
                 }
             }
+            Häufigkeit(augen, anzahlWürfe);
             ReadKey();
+        }
+
+        static void Häufigkeit(List<int> augen, int anzahlWürfe)
+        {
+            int sum = 0;
+            int[] häufigkeit = new int[7];
+            foreach (var item in augen)
+            {
+                häufigkeit[item]++;
+            }
+            for (int i = 1; i < häufigkeit.Length; i++)
+            {
+                WriteLine($"{i}: {100.0/ (anzahlWürfe*5) * häufigkeit[i]:N2}%");
+            }
+            // print a histogram for the distribution
+            for (int i = 1; i < häufigkeit.Length; i++)
+            {
+                Write($"{i}: ");
+                for (int j = 0; j < häufigkeit[i]; j++)
+                {
+                    Write("*");
+                }
+                WriteLine();
+            }
+
+
+
+            foreach (var auge in augen)
+            {
+                sum += auge;
+            }
+            WriteLine($"Summe: {sum}");
+            
         }
 
         static void Test()
